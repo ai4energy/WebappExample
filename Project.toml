@@ -1,0 +1,4 @@
+name = "WebappExample"
+uuid = "98a5acad-e952-44fc-a03d-a5ebf3b24722"
+authors = ["Mingtao Li <mingtao.li@gmail.com>"]
+version = "0.1.0"
