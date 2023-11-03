@@ -23,3 +23,22 @@ Pkg.generate("WebappExample")
 这将在myrepos目录中创建一个名为"WebappExample"的新目录，用于包的代码和文件。
 
 4. 修改WebappExample.jl文件，增加自己的函数和处理逻辑。
+
+5. 此时可以使用如下的代码加载WebappExample包：
+
+```julia
+using WebappExample
+WebappExample.myhello()
+```
+
+我们可以在bench目录建立bench.jl，包含以上内容。
+
+## Pkg添加本地包
+
+使用git提交修改到本地。打开julia，切换到Pkg模式，使用如下的代码可以添加WebappExample到系统环境：
+```julia
+add "/path/to/WebappExample"
+# 比如 add "D:\\gitprojects\\ai4energy\\WebappExample"
+```
+
+此时在julia的REPL中就可以`using WebappExample`了。
