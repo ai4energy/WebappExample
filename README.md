@@ -42,3 +42,49 @@ add "/path/to/WebappExample"
 ```
 
 此时在julia的REPL中就可以`using WebappExample`了。
+
+## 编译成可执行程序
+
+在WebappExample.jl中加入函数julia_main：
+```julia
+function julia_main()::Cint
+    println("Hello from Julia EXE!")
+    WebappExample.greet()
+    WebappExample.myhello()
+    return 0
+end
+```
+
+然后在/path/to/WebappExample下建立compile文件夹，并建立compile.jl文件。并且compile文件夹建立相应的环境，添加PackageCompiler包。
+
+接下来在terminal中，使用如下的命令编译成exe文件：
+```shell
+julia --project=./compile compile/compile.jl
+```
+
+现在就可以这样启动exe程序了：
+
+```shell
+./build/bin/webapp
+```
+
+## 加入Makefile来进行自动化
+
+现在在/path/to/WebappExample下建立Makefile文件，内容如下：
+```Makefile
+bench:
+	julia --project=./bench bench/bench.jl
+
+build:
+	julia --project=./compile compile/compile.jl
+
+clean:
+	rm -rf build/
+```
+
+这样，我们就可以在terminal中，使用如下的命令了：
+```shell
+make bench
+make build
+make clean
+```
