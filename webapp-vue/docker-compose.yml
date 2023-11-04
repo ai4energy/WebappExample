@@ -1,0 +1,11 @@
+version: "3.2"
+
+services: 
+  webappvue:
+    image: nginx:alpine
+    container_name: webappvue
+
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - "8081:80"

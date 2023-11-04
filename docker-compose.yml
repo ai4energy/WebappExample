@@ -4,7 +4,16 @@ services:
   webappexample:
     container_name: webappexample
     build:
-      context: .
+      context: ./WebappExample
     command: julia --project="/opt/julia" serve/webappserve.jl
     ports:
-      - "80:8080"
+      - "81:8080"
+
+  webappvue:
+    image: nginx:alpine
+    container_name: webappvue
+
+    volumes:
+      - ./webapp-vue/dist:/usr/share/nginx/html
+    ports:
+      - "80:80"
