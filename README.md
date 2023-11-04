@@ -136,3 +136,5 @@ Docker Compose 允许您定义和管理多个 Docker 容器，以便在复杂的
 通过这个 Docker Compose 配置文件，您可以使用 `docker-compose` 命令来轻松地启动和管理 "webappexample" 服务。只需在包含此文件的目录中运行 `docker-compose up`，Docker Compose 将自动构建镜像、创建容器，并启动应用程序。
 
 当然，如果我们编译成独立可执行文件，那在docker-compose.yml文件中的启动命令就应该不一样。也就是说要修改`command: julia --project="/opt/julia" serve/webappexample.jl`这一行。
+
+另外，我们可以使用容器镜像服务，比如阿里云的容器镜像服务。如果我们看到docker-compose中`image: registry.cn-shenzhen.aliyuncs.com/ai4e/webapp:1.0`这样的字样，就是使用了阿里云的容器镜像服务。就是本地build容器镜像，然后推送到了阿里云的容器镜像服务器。用户就只需要拉取这个镜像就可以了。这样我们就可以很方便用户使用。
