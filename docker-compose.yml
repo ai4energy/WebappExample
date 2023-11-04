@@ -5,6 +5,6 @@ services:
     container_name: webappexample
     build:
       context: .
-    command: julia --project="/opt/julia" serve/webappexample.jl
+    command: julia --project="/opt/julia" serve/webappserve.jl
     ports:
-      - "8080:8080"
+      - "80:8080"

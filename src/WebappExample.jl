@@ -6,8 +6,8 @@ function myhello()
     print("Hello from WebappExample！")
 end
 
-function start_server(;port::Int=8080, async::Bool = false)
-    serve(; port, async)
+function start_server(;host="0.0.0.0", port::Int=8080, async::Bool = false)
+    serve(; host, port, async)
 end
 
 function julia_main()::Cint

@@ -4,7 +4,7 @@ FROM julia:1.9.3
 ENV JULIA_NUM_THREADS=2
 WORKDIR /opt/julia/
 COPY . .
-RUN julia --project="." -e 'import Pkg; Pkg.instantiate();'
+RUN julia --project="." -e 'ENV["JULIA_PKG_SERVER"] = "https://mirrors.pku.edu.cn/julia";import Pkg; Pkg.instantiate();'
 RUN julia --project="." compile/precompile.jl
 
 EXPOSE 8080
