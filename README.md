@@ -88,3 +88,8 @@ make bench
 make build
 make clean
 ```
+
+## 使用Oxygen.jl实现web服务
+在当前环境下加入Oxygen, SwaggerMarkdown, HTTP包。代码修改情况直接看源码。
+
+在这里我们新建了一个router.jl文件，在WebappExample包的__init__函数中引入了这个router.jl文件。至于为什么要这么做，请参考[Oxygen.jl的issue 115](https://github.com/ndortega/Oxygen.jl/issues/115)。

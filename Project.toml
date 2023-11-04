@@ -2,3 +2,8 @@ name = "WebappExample"
 uuid = "98a5acad-e952-44fc-a03d-a5ebf3b24722"
 authors = ["Mingtao Li <mingtao.li@gmail.com>"]
 version = "0.2.0"
+
+[deps]
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+Oxygen = "df9a0d86-3283-4920-82dc-4555fc0d1d8b"
+SwaggerMarkdown = "1b6eb727-ad4b-44eb-9669-b9596a6e760f"
