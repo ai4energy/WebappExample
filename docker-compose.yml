@@ -1,0 +1,10 @@
+version: "3.2"
+
+services: 
+  webappexample:
+    container_name: webappexample
+    build:
+      context: .
+    command: julia --project="/opt/julia" serve/webappexample.jl
+    ports:
+      - "8080:8080"

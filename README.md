@@ -92,4 +92,47 @@ make clean
 ## 使用Oxygen.jl实现web服务
 在当前环境下加入Oxygen, SwaggerMarkdown, HTTP包。代码修改情况直接看源码。
 
-在这里我们新建了一个router.jl文件，在WebappExample包的__init__函数中引入了这个router.jl文件。至于为什么要这么做，请参考[Oxygen.jl的issue 115](https://github.com/ndortega/Oxygen.jl/issues/115)。
+在这里我们新建了一个router.jl文件，在WebappExample包的__init__函数中引入了这个router.jl文件。至于为什么要这么做，请参考[Oxygen.jl的issue 115](https://github.com/ndortega/Oxygen.jl/issues/115)以及[OxygenExample.jl的测试文件](https://github.com/Sukhoverkhaya/OxygenExample.jl/blob/master/test/runtests.jl)。
+
+## 使用docker封装成服务
+
+在当前目录中增加Dockerfile，内容直接看文件。Dockerfile是用来创建docker的镜像的。可以使用如下的命令创建镜像。
+```shell
+docker build -t webappexample:1.0 .
+```
+
+我们也可以直接在docker-compose中创建镜像。参加本目录中的使用 Docker Compose 编排工具定义的 Docker 服务的示例配置文件，即docker-compose.yml文件。内容如下：
+```shell
+version: "3.2"
+
+services: 
+  webappexample:
+    container_name: webappexample
+    build:
+      context: .
+    command: julia --project="/opt/julia" serve/webappexample.jl
+    ports:
+      - "8080:8080"
+```
+
+Docker Compose 允许您定义和管理多个 Docker 容器，以便在复杂的应用程序中协调它们的运行。在这个配置文件中，定义了一个名为 "webappexample" 的 Docker 服务，以下是对配置文件中各个部分的解释：
+
+1. `version: "3.2"`：这是 Docker Compose 文件的版本。该文件采用 "3.2" 版本的 Docker Compose 格式，它定义了支持的配置选项和语法。
+
+2. `services`：在这个部分中，您可以定义一个或多个 Docker 服务。每个服务都代表一个独立的容器应用。
+
+3. `webappexample` 服务：
+
+   - `container_name: webappexample`：为容器指定一个名称，这里将容器命名为 "webappexample"。
+
+   - `build` 部分：这里定义了构建镜像的方式。
+     - `context: .`：构建上下文，这里使用了当前目录作为构建上下文。构建上下文是包含构建镜像所需文件和目录的位置。
+
+   - `command: julia --project="/opt/julia" serve/webappexample.jl`：容器启动时要执行的命令。这里启动了一个 Julia 应用程序，指定了项目目录，并执行了名为 "webappexample.jl" 的 Julia 脚本。
+
+   - `ports` 部分：定义了容器端口映射。
+     - `"8080:8080"`：将容器内的端口 8080 映射到主机的端口 8080。这意味着从主机上访问端口 8080 将被转发到容器内的端口 8080，以便访问容器中的应用程序。
+
+通过这个 Docker Compose 配置文件，您可以使用 `docker-compose` 命令来轻松地启动和管理 "webappexample" 服务。只需在包含此文件的目录中运行 `docker-compose up`，Docker Compose 将自动构建镜像、创建容器，并启动应用程序。
+
+当然，如果我们编译成独立可执行文件，那在docker-compose.yml文件中的启动命令就应该不一样。也就是说要修改`command: julia --project="/opt/julia" serve/webappexample.jl`这一行。
