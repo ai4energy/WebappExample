@@ -7,7 +7,7 @@ services:
       context: ./WebappExample
     command: julia --project="/opt/julia" serve/webappserve.jl
     ports:
-      - "81:8080"
+      - "8080:8080"
 
   webappvue:
     image: nginx:alpine

@@ -1,5 +1,12 @@
 module WebappExample
 using Oxygen, SwaggerMarkdown, HTTP
+
+const CORS_HEADERS = [
+    "Access-Control-Allow-Origin" => "*",
+    "Access-Control-Allow-Headers" => "*",
+    "Access-Control-Allow-Methods" => "POST, GET, OPTIONS"
+]
+
 greet() = print("Hello World!")
 
 function myhello()
