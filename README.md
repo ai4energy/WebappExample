@@ -221,3 +221,43 @@ services:
 我们按照这个docker-compose.yml启动服务，此时从浏览器中访问`http://127.0.0.1:8081`测试。
 
 由于进行了目录迁移，进一步的在WebappExample目录中也进行充分测试，确保工作正常。
+
+## 前后端docker-compose关联
+后端j加入如下代码允许跨域：
+```julia
+const CORS_HEADERS = [
+    "Access-Control-Allow-Origin" => "*",
+    "Access-Control-Allow-Headers" => "*",
+    "Access-Control-Allow-Methods" => "POST, GET, OPTIONS"
+]
+...
+function CorsMiddleware(handler)
+   return function (req::HTTP.Request)
+      # println("CORS middleware")
+            # determine if this is a pre-flight request from the browser
+      if HTTP.method(req) ∈ ["POST", "GET", "OPTIONS"]
+         return HTTP.Response(200, CORS_HEADERS, HTTP.body(handler(req)))
+      else
+         return handler(req) # passes the request to the AuthMiddleware
+         end
+      end
+end
+serve(host="0.0.0.0", port=8080, async=false, middleware=[CorsMiddleware])
+```
+
+
+前端通过```axios.get(`http://127.0.0.1:8080/sub/${num1Value}/${num2Value}`)```这样的代码访问。
+
+## 连接TCLab
+下载[TCLab.jl包](https://github.com/ai4energy/TCLab.jl)，连接硬件。在命令行中测试各种功能。
+
+## 前端实现虚拟的TCLab界面
+利用vue构建TCLab前端页面。
+
+## 使用ModelingToolkit实现TCLabSim包
+实现TCLab的模型、仿真、参数回归、PID控制、模型预测控制。
+
+## 实现完整的数字孪生体应用
+1. 在页面上显示运行导航建议+手动控制指令下发。
+
+2. 实现完整的自动控制。
