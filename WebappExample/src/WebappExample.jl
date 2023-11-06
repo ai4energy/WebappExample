@@ -7,21 +7,25 @@ const CORS_HEADERS = [
     "Access-Control-Allow-Methods" => "POST, GET, OPTIONS"
 ]
 
-greet() = print("Hello World!")
-
-function myhello()
-    print("Hello from WebappExample！")
-end
-
-function start_server(;host="0.0.0.0", port::Int=8080, async::Bool = false)
-    serve(; host, port, async)
-end
 
 function julia_main()::Cint
-    println("Hello from Julia EXE!")
-    WebappExample.greet()
-    WebappExample.myhello()
-    WebappExample.start_server()
+    # 跨域解决方案
+    function CorsMiddleware(handler)
+        return function (req::HTTP.Request)
+            # println("CORS middleware")
+            # determine if this is a pre-flight request from the browser
+            if HTTP.method(req) ∈ ["POST", "GET", "OPTIONS"]
+                return HTTP.Response(200, CORS_HEADERS, HTTP.body(handler(req)))
+            else
+                return handler(req) # passes the request to the AuthMiddleware
+            end
+        end
+    end
+    get("/sub/{x}/{y}") do request::HTTP.Request, x::Int, y::Int
+        x - y
+    end
+
+    serve(host="0.0.0.0", port=8080, async=false, middleware=[CorsMiddleware])
     return 0
 end
 

@@ -1,4 +1,4 @@
-FROM julia:1.9.3
+FROM --platform=linux/amd64 julia:1.9.3
 
 ## Install Julia packages
 ENV JULIA_NUM_THREADS=2
