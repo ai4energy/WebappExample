@@ -23,7 +23,7 @@ const makeRequest = () => {
   if (Number.isInteger(num1Value) && Number.isInteger(num2Value)){
     console.log(num1Value);
     console.log(num2Value);
-  axios.get(`http://127.0.0.1:8080/sub/${num1Value}/${num2Value}`)
+  axios.get(`/api/sub/${num1Value}/${num2Value}`)
     .then((response) => {
       const resultValue = response.data.toString();
       result.value=resultValue;
