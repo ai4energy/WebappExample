@@ -1,23 +1,12 @@
-FROM node:16.17.0 as builder
-
+FROM node:20.12.2 as builder
 ENV WORKDIR=/frontserverdir
-
 WORKDIR $WORKDIR
-
 COPY ./ $WORKDIR/
-
 ARG version
 ENV COMMITID=$version
-
 RUN npm i -g pnpm
-
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 RUN pnpm build
-
 FROM nginx:alpine as prod
-
-RUN mkdir /frontserverdir
-
-COPY --from=builder /frontserverdir/dist /frontserverdir
-
+COPY --from=builder /frontserverdir/dist /usr/share/nginx/html/
 EXPOSE 80
